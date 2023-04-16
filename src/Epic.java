@@ -9,11 +9,11 @@ public class Epic extends Task {
     }
 
     public ArrayList<Integer> getSubtaskId() {
-        return subtaskId;
+        return new ArrayList<>(subtaskId);
     }
 
     public void setSubtaskId(ArrayList<Integer> subtaskId) {
-        this.subtaskId = subtaskId;
+        this.subtaskId = new ArrayList<>(subtaskId);
     }
 
     @Override

@@ -41,8 +41,9 @@
             manager.printAllSubtasks();
             manager.printAllEpics();
 
-            manager.deleteById(1);
-            manager.deleteById(3);
+            manager.deleteAllSubtasks();
+
+            
 
             manager.printAllTasks();
             manager.printAllSubtasks();

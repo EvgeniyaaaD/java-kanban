@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Objects;
 
 public class Manager {
     private int nextId = 1;
@@ -40,25 +41,49 @@ public class Manager {
 
     public void deleteAllSubtasks() {
         subtaskList.clear();
+        for (Integer id : subtaskList.keySet()) {
+            if (subtaskList.get(id) == null) {
+                return;
+            }
+            int idEpic = subtaskList.get(id).getEpicId();
+            if (epicList.get(idEpic) == null) {
+                return;
+            }
+            epicList.get(idEpic).getSubtaskId().clear();
+            updateStatus(epicList.get(idEpic));
+        }
         System.out.println(subtaskList);
     }
 
     public void deleteAllEpics() {
         epicList.clear();
+        for (Integer idEpic : epicList.keySet()) {
+            if (epicList.get(idEpic) == null) {
+                return;
+            }
+            for (Integer id : epicList.get(idEpic).getSubtaskId()) {
+                epicList.get(idEpic).getSubtaskId().remove(id);
+            }
+            updateStatus(epicList.get(idEpic));
+        }
         System.out.println(epicList);
     }
 
-    public void findById(int id) {
+    public Object findById(int id) {
         if (taskList.containsKey(id)) {
-            System.out.println(taskList.get(id));
+            return taskList.get(id);
         }
         if (subtaskList.containsKey(id)) {
-            System.out.println(subtaskList.get(id));
+            return subtaskList.get(id);
         }
         if (epicList.containsKey(id)) {
-            System.out.println(epicList.get(id));
+           return epicList.get(id);
         }
+        return "Задачи с таким номером нет";
     }
+
+
+
 
     public void deleteById(int id) {
         if (taskList.containsKey(id)) {
@@ -113,13 +138,29 @@ public class Manager {
 
     private void updateStatus(Epic epic) {
         String statusEpic = "";
+        int statusNew = 0;
+        int statusInProgress = 0;
+        int statusDone = 0;
         for (Integer subtaskId : epic.getSubtaskId()) {
-            if (epic.getStatus().equals(subtaskList.get(subtaskId).getStatus())) {
-                statusEpic = epic.getStatus();
+            switch (subtaskList.get(subtaskId).getStatus()) {
+                case "NEW":
+                    statusNew++;
+                    break;
+                case "IN_PROGRESS":
+                    statusInProgress++;
+                    break;
+                case "DONE":
+                    statusDone++;
+                    break;
+            }
+
+            if (statusInProgress == 0 && statusDone == 0) {
+                epic.setStatus("NEW");
+            } else if (statusNew == 0 && statusInProgress == 0) {
+                epic.setStatus("DONE");
             } else {
-                statusEpic = "IN_PROGRESS";
+                epic.setStatus("IN_PROGRESS");
             }
         }
-        epic.setStatus(statusEpic);
     }
 }
