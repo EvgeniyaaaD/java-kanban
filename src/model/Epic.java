@@ -1,3 +1,5 @@
+package model;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -9,11 +11,11 @@ public class Epic extends Task {
     }
 
     public ArrayList<Integer> getSubtaskId() {
-        return new ArrayList<>(subtaskId);
+        return subtaskId;
     }
 
     public void setSubtaskId(ArrayList<Integer> subtaskId) {
-        this.subtaskId = new ArrayList<>(subtaskId);
+        this.subtaskId = subtaskId;
     }
 
     @Override
@@ -32,7 +34,7 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        return "domain.Epic{" +
+        return "domain.model.Epic{" +
                 "subtaskId=" + subtaskId +
                 ", id=" + id +
                 ", title='" + title + '\'' +
