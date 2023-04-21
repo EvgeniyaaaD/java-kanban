@@ -36,9 +36,9 @@ public class Main {
             manager.printAllEpicSubtasks(epic1);
             manager.printAllEpicSubtasks(epic2);
 
-            Subtask subtask4 = new Subtask(6, "Подзадача 1", "Купить яйца", "IN_PROGRESS", epic1.getId());
+            Subtask subtask4 = new Subtask(4, "Подзадача 1", "Купить яйца", "IN_PROGRESS", epic1.getId());
             manager.update(subtask4);
-            Subtask subtask5 = new Subtask(9, "1 подзадача", "Заказать доставку цветов", "DONE",
+            Subtask subtask5 = new Subtask(7, "1 подзадача", "Заказать доставку цветов", "DONE",
                     epic2.getId());
             manager.update(subtask5);
 
@@ -46,11 +46,16 @@ public class Main {
             manager.printAllSubtasks();
             manager.printAllEpics();
 
-            manager.findSubtaskById(7);
-            manager.findById(3);
+            manager.deleteTaskById(1);
+            manager.deleteSubtaskById(7);
+            manager.deleteEpicById(6);
 
-            manager.printAllEpicSubtasks(epic2);
 
+            System.out.println(manager.findSubtaskById(4));
+            System.out.println(manager.findById(2));
+
+
+            manager.printAllEpicSubtasks(epic1);
 
             manager.printAllTasks();
             manager.printAllSubtasks();
