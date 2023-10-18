@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Subtask extends Task {
     protected int epicId;
 
-    public Subtask(int id, String title, String description, String status, int epicId) {
+    public Subtask(int id, String title, String description, StatusOfTasks status, int epicId) {
         super(id, title, description, status);
         this.epicId = epicId;
     }
