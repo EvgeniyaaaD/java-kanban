@@ -16,11 +16,11 @@ public interface TaskManager {
 
     void add(Epic epic);
 
-    void printAllTasks();
+    void getAllTasks();
 
-    void printAllSubtasks();
+    void getAllSubtasks();
 
-    void printAllEpics();
+    void getAllEpics();
 
     void deleteAllTasks();
 
@@ -28,7 +28,9 @@ public interface TaskManager {
 
     void deleteAllEpics();
 
-    Task findById(int id);
+    Epic findEpicById(int id);
+
+    Task findTaskById(int id);
 
     Subtask findSubtaskById(int id);
 

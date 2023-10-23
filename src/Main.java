@@ -20,9 +20,9 @@ public class Main {
         Subtask subtask2 = new Subtask(-1, "Подзадача 2", "Купить хлеб", StatusOfTasks.NEW, epic1.getId());
         manager.add(subtask2);
 
-        manager.printAllTasks();
-        manager.printAllSubtasks();
-        manager.printAllEpics();
+        manager.getAllTasks();
+        manager.getAllSubtasks();
+        manager.getAllEpics();
         manager.printAllEpicSubtasks(epic1);
 
         Epic epic2 = new Epic(-1, "Эпик 2", "Цветы для мамы", StatusOfTasks.NEW);
@@ -31,9 +31,9 @@ public class Main {
                 epic2.getId());
         manager.add(subtask3);
 
-        manager.printAllTasks();
-        manager.printAllSubtasks();
-        manager.printAllEpics();
+        manager.getAllTasks();
+        manager.getAllSubtasks();
+        manager.getAllEpics();
 
         manager.printAllEpicSubtasks(epic1);
         manager.printAllEpicSubtasks(epic2);
@@ -44,9 +44,9 @@ public class Main {
                 epic2.getId());
         manager.update(subtask5);
 
-        manager.printAllTasks();
-        manager.printAllSubtasks();
-        manager.printAllEpics();
+        manager.getAllTasks();
+        manager.getAllSubtasks();
+        manager.getAllEpics();
 
         manager.deleteTaskById(1);
         manager.deleteSubtaskById(7);
@@ -54,17 +54,17 @@ public class Main {
 
 
         System.out.println(manager.findSubtaskById(4));
-        System.out.println(manager.findById(2));
-        System.out.println(manager.findById(2));
-        System.out.println(manager.findById(2));
-        System.out.println(manager.findById(2));
-        System.out.println(manager.findById(2));
-        System.out.println(manager.findById(2));
-        System.out.println(manager.findById(2));
-        System.out.println(manager.findById(2));
-        System.out.println(manager.findById(2));
-        System.out.println(manager.findById(2));
-        System.out.println(manager.findById(3));
+        System.out.println(manager.findEpicById(2));
+        System.out.println(manager.findEpicById(3));
+        System.out.println(manager.findTaskById(2));
+        System.out.println(manager.findTaskById(2));
+        System.out.println(manager.findTaskById(2));
+        System.out.println(manager.findSubtaskById(4));
+        System.out.println(manager.findTaskById(2));
+        System.out.println(manager.findTaskById(2));
+        System.out.println(manager.findTaskById(2));
+        System.out.println(manager.findSubtaskById(4));
+        System.out.println(manager.findEpicById(3));
 
 
 
@@ -72,8 +72,8 @@ public class Main {
 
         System.out.println(manager.getHistoryManager());
 
-        manager.printAllTasks();
-        manager.printAllSubtasks();
-        manager.printAllEpics();
+        manager.getAllTasks();
+        manager.getAllSubtasks();
+        manager.getAllEpics();
     }
 }

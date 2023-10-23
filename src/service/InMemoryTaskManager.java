@@ -23,7 +23,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     private void addHistory(Task task) {
-        this.historyManager.addTaskHistory(task);
+        this.historyManager.add(task);
     }
 
     public List<Task> getHistoryManager() {
@@ -56,18 +56,18 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void printAllTasks() {
+    public void getAllTasks() {
         System.out.println("");
         System.out.println(taskList);
     }
 
     @Override
-    public void printAllSubtasks() {
+    public void getAllSubtasks() {
         System.out.println(subtaskList);
     }
 
     @Override
-    public void printAllEpics() {
+    public void getAllEpics() {
         System.out.println(epicList);
     }
 
@@ -99,20 +99,6 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Task findById(int id) {
-        Task task = null;
-        if (taskList.containsKey(id)) {
-            task = taskList.get(id);
-        } else if (subtaskList.containsKey(id)) {
-            task = subtaskList.get(id);
-        } else if (epicList.containsKey(id)) {
-            task = epicList.get(id);
-        }
-        addHistory(task);
-        return task;
-    }
-
-    @Override
     public Subtask findSubtaskById(int id) {
         Subtask subtask = null;
         if (subtaskList.containsKey(id)) {
@@ -121,6 +107,28 @@ public class InMemoryTaskManager implements TaskManager {
         }
         addHistory(subtask);
         return subtask;
+    }
+
+    @Override
+    public Epic findEpicById(int id) {
+        Epic epic = null;
+        if (epicList.containsKey(id)) {
+            epic = epicList.get(id);
+
+        }
+        addHistory(epic);
+        return epic;
+    }
+
+    @Override
+    public Task findTaskById(int id) {
+        Task task = null;
+        if (taskList.containsKey(id)) {
+            task = taskList.get(id);
+
+        }
+        addHistory(task);
+        return task;
     }
 
     @Override
