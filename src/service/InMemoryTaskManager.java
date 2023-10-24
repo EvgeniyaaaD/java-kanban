@@ -5,6 +5,7 @@ import model.StatusOfTasks;
 import model.Subtask;
 import model.Task;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -56,19 +57,18 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void getAllTasks() {
-        System.out.println("");
-        System.out.println(taskList);
+    public Collection<Task> getAllTasks() {
+        return taskList.values();
     }
 
     @Override
-    public void getAllSubtasks() {
-        System.out.println(subtaskList);
+    public Collection<Subtask> getAllSubtasks() {
+         return subtaskList.values();
     }
 
     @Override
-    public void getAllEpics() {
-        System.out.println(epicList);
+    public Collection<Epic> getAllEpics() {
+        return epicList.values();
     }
 
     @Override
@@ -103,9 +103,8 @@ public class InMemoryTaskManager implements TaskManager {
         Subtask subtask = null;
         if (subtaskList.containsKey(id)) {
             subtask = subtaskList.get(id);
-
+            addHistory(subtask);
         }
-        addHistory(subtask);
         return subtask;
     }
 
@@ -114,9 +113,8 @@ public class InMemoryTaskManager implements TaskManager {
         Epic epic = null;
         if (epicList.containsKey(id)) {
             epic = epicList.get(id);
-
+            addHistory(epic);
         }
-        addHistory(epic);
         return epic;
     }
 
@@ -125,9 +123,8 @@ public class InMemoryTaskManager implements TaskManager {
         Task task = null;
         if (taskList.containsKey(id)) {
             task = taskList.get(id);
-
+            addHistory(task);
         }
-        addHistory(task);
         return task;
     }
 

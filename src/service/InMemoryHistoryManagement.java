@@ -16,14 +16,13 @@ public class InMemoryHistoryManagement implements HistoryManager {
     }
 
     public List<Task> getHistory() {
-        List<Task> copyHistory = history;
-        return copyHistory;
+        return new ArrayList<>(history);
     }
 
     public void add(Task task) {
-        if (this.history.size() >= MAX_VAlUE_HISTORY) {
-            this.history.remove(0);
+        if (history.size() >= MAX_VAlUE_HISTORY) {
+            history.remove(0);
         }
-        this.history.add(task);
+        history.add(task);
     }
 }
