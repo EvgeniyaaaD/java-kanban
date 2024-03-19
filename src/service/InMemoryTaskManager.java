@@ -5,6 +5,7 @@ import model.StatusOfTasks;
 import model.Subtask;
 import model.Task;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -23,11 +24,11 @@ public class InMemoryTaskManager implements TaskManager {
         this.historyManager = historyManager;
     }
 
-    private void addHistory(Task task) {
-        this.historyManager.add(task);
+    private void addHistory(int taskId) {
+        this.historyManager.addTask(taskId);
     }
 
-    public List<Task> getHistoryManager() {
+    public List<Integer> getHistoryManager() {
         return this.historyManager.getHistory();
     }
 
@@ -103,7 +104,7 @@ public class InMemoryTaskManager implements TaskManager {
         Subtask subtask = null;
         if (subtaskList.containsKey(id)) {
             subtask = subtaskList.get(id);
-            addHistory(subtask);
+            addHistory(id);
         }
         return subtask;
     }
@@ -113,7 +114,7 @@ public class InMemoryTaskManager implements TaskManager {
         Epic epic = null;
         if (epicList.containsKey(id)) {
             epic = epicList.get(id);
-            addHistory(epic);
+            addHistory(id);
         }
         return epic;
     }
@@ -123,7 +124,7 @@ public class InMemoryTaskManager implements TaskManager {
         Task task = null;
         if (taskList.containsKey(id)) {
             task = taskList.get(id);
-            addHistory(task);
+            addHistory(id);
         }
         return task;
     }
@@ -160,7 +161,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (epicList.containsValue(epic)) {
             for (Integer id : epic.getSubtaskId()) {
                 System.out.println(subtaskList.get(id));
-            };
+            }
         }
     }
 

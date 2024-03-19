@@ -11,7 +11,7 @@ public interface TaskManager {
 
     void add(Task task);
 
-    List<Task> getHistoryManager();
+    List<Integer> getHistoryManager();
 
     void add(Subtask subtask);
 
