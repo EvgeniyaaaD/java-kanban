@@ -5,8 +5,6 @@ import service.Managers;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 public class MainTest {
     public static void main(String[] args) {
         test1();
