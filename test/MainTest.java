@@ -1,4 +1,3 @@
-package test;
 
 import service.HistoryManager;
 import service.Managers;
