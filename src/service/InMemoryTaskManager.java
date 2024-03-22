@@ -11,6 +11,11 @@ import java.util.List;
 
 public class InMemoryTaskManager implements TaskManager {
     private int nextId = 1;
+
+    public HashMap<Integer, Task> getTaskList() {
+        return taskList;
+    }
+
     private HashMap<Integer, Task> taskList;
     private HashMap<Integer, Subtask> subtaskList;
     private HashMap<Integer, Epic> epicList;
@@ -74,6 +79,11 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void deleteAllTasks() {
         taskList.clear();
+        while (!taskList.isEmpty()) {
+            for (Integer id : taskList.keySet()) {
+                historyManager.remove(id);
+            }
+        }
         System.out.println(taskList);
     }
 
