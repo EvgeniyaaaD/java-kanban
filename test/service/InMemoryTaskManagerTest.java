@@ -20,7 +20,6 @@ class InMemoryTaskManagerTest {
         inMemoryTaskManager.add(task1);
         Task task2 = new Task(-1, "Задача 2", "Повесить картину", StatusOfTasks.NEW);
         inMemoryTaskManager.add(task2);
-        System.out.println("Добавили " + inMemoryTaskManager.getTaskList().size() + " задачи");
     }
 
     @Test
@@ -28,9 +27,5 @@ class InMemoryTaskManagerTest {
         manager.deleteAllTasks();
         List<Integer> result = historyManager.getHistory();
         assertEquals(0, result.size());
-    }
-
-    @Test
-    void deleteEpicById() {
     }
 }
