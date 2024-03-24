@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class EpicTest {
-    Epic epic1 = new Epic(1, "Эпик 1", "Купить продукты", StatusOfTasks.NEW);
-    Epic epic2 = new Epic(4, "Эпик 2", "Цветы для мамы", StatusOfTasks.NEW);
 
     @Test
-    void distinguishBetweenEpicWithSameId() {
+    void equalsEpicsWithSameIdShouldBeSameEpics() {
+        Epic epic1 = new Epic(1, "Эпик 1", "Купить продукты");
+        Epic epic2 = new Epic(4, "Эпик 2", "Цветы для мамы");
         epic1.setId(1);
         epic2.setId(1);
 
@@ -17,7 +17,8 @@ class EpicTest {
     }
 
     @Test
-    void createEpic() {
+    void createEpicShouldCreateEpic() {
+        Epic epic1 = new Epic(1, "Эпик 1", "Купить продукты");
         assertEquals(1, epic1.getId());
         assertEquals("Эпик 1", epic1.getTitle());
         assertEquals("Купить продукты", epic1.getDescription());
@@ -26,14 +27,16 @@ class EpicTest {
     }
 
     @Test
-    void addSubtaskToEpic() {
+    void addSubtaskToEpicShouldAddSubtaskIdToEpicsSubtasks() {
+        Epic epic1 = new Epic(1, "Эпик 1", "Купить продукты");
         epic1.addSubtaskId(1);
         assertEquals(1, epic1.getSubtaskId().size());
         assertTrue(epic1.getSubtaskId().contains(1));
     }
 
     @Test
-    void removeSubtaskFromEpic() {
+    void removeSubtaskFromEpicShouldRemoveSubtaskIdFromEpicsSubtasks() {
+        Epic epic1 = new Epic(1, "Эпик 1", "Купить продукты");
         epic1.addSubtaskId(1);
         epic1.removeSubtaskId(1);
 
@@ -41,7 +44,8 @@ class EpicTest {
     }
 
     @Test
-    void removeAllSubtasksFromEpic() {
+    void removeAllSubtasksFromEpicShouldRemoveAllSubtaskIdFromEpicsSubtasks() {
+        Epic epic1 = new Epic(1, "Эпик 1", "Купить продукты");
         epic1.addSubtaskId(1);
         epic1.addSubtaskId(2);
         epic1.removeAllSubtasks();

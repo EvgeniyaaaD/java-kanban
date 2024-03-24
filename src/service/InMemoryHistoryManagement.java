@@ -62,7 +62,6 @@ public class InMemoryHistoryManagement implements HistoryManager {
         public List<Integer> getAll() {
             List<Integer> toReturn = new LinkedList<>();
 
-
             Node current = head.next;
 
             while (current != tail) {

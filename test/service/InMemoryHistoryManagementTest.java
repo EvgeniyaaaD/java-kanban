@@ -1,11 +1,13 @@
 package service;
+
 import org.junit.jupiter.api.Test;
+
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryHistoryManagementTest {
     InMemoryHistoryManagement inMemoryHistoryManagement = new InMemoryHistoryManagement();
-    HistoryManager historyManager = Managers.getHistoryManagement();
 
     @Test
     void addTaskToDisplayInHistory() {
@@ -31,5 +33,4 @@ class InMemoryHistoryManagementTest {
         }
         assertEquals("[2, 1]", result.toString());
     }
-
 }

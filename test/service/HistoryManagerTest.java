@@ -1,8 +1,11 @@
 package service;
-import model.Task;
+
 import org.junit.jupiter.api.Test;
+
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class HistoryManagerTest {
     HistoryManager historyManager = Managers.getHistoryManagement();
@@ -19,12 +22,13 @@ class HistoryManagerTest {
     }
 
     @Test
-    void add() {
+    void addShouldAddTaskToHistory() {
         historyManager.addTask(1);
         final List<Integer> history = historyManager.getHistory();
         assertNotNull(history, "История не пустая.");
         assertEquals(1, history.size(), "История не пустая.");
     }
+
     @Test
     void addSameTaskWillBeOverwrittenInHistory() {
         historyManager.addTask(1);
@@ -37,16 +41,5 @@ class HistoryManagerTest {
             throw new IllegalArgumentException();
         }
         assertEquals("[2, 1]", result.toString());
-    }
-    @Test
-    void getHistory() {
-    }
-
-    @Test
-    void addTask() {
-    }
-
-    @Test
-    void remove() {
     }
 }
