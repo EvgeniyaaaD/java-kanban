@@ -13,7 +13,7 @@ public class Main {
         Task task2 = new Task(-1, "Задача 2", "Повесить картину", StatusOfTasks.NEW);
         manager.add(task2);
 
-        Epic epic1 = new Epic(-1, "Эпик 1", "Купить продукты", StatusOfTasks.NEW);
+        Epic epic1 = new Epic(-1, "Эпик 1", "Купить продукты");
         manager.add(epic1);
         Subtask subtask1 = new Subtask(-1, "Подзадача 1", "Купить яйца", StatusOfTasks.NEW, epic1.getId());
         manager.add(subtask1);
@@ -23,9 +23,8 @@ public class Main {
         manager.getAllTasks();
         manager.getAllSubtasks();
         manager.getAllEpics();
-        manager.printAllEpicSubtasks(epic1);
 
-        Epic epic2 = new Epic(-1, "Эпик 2", "Цветы для мамы", StatusOfTasks.NEW);
+        Epic epic2 = new Epic(-1, "Эпик 2", "Цветы для мамы");
         manager.add(epic2);
         Subtask subtask3 = new Subtask(-1, "1 подзадача", "Заказать доставку цветов", StatusOfTasks.NEW,
                 epic2.getId());
@@ -34,9 +33,6 @@ public class Main {
         manager.getAllTasks();
         manager.getAllSubtasks();
         manager.getAllEpics();
-
-        manager.printAllEpicSubtasks(epic1);
-        manager.printAllEpicSubtasks(epic2);
 
         Subtask subtask4 = new Subtask(4, "Подзадача 1", "Купить яйца", StatusOfTasks.IN_PROGRESS, epic1.getId());
         manager.update(subtask4);
@@ -52,7 +48,6 @@ public class Main {
         manager.deleteSubtaskById(7);
         manager.deleteEpicById(6);
 
-
         System.out.println(manager.findSubtaskById(4));
         System.out.println(manager.findEpicById(2));
         System.out.println(manager.findEpicById(3));
@@ -66,11 +61,7 @@ public class Main {
         System.out.println(manager.findSubtaskById(4));
         System.out.println(manager.findEpicById(3));
 
-
-
-        manager.printAllEpicSubtasks(epic1);
-
-        System.out.println(manager.getHistoryManager());
+        System.out.println(manager.getHistoryTasks());
 
         System.out.println(manager.getAllTasks());
         System.out.println(manager.getAllSubtasks());

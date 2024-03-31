@@ -6,8 +6,9 @@ import java.util.Objects;
 public class Epic extends Task {
     protected ArrayList<Integer> subtaskId = new ArrayList<>();
 
-    public Epic(int id, String title, String description, StatusOfTasks status) {
-        super(id, title, description, status);
+    public Epic(int id, String title, String description) {
+        super(id, title, description, null);
+        this.status = StatusOfTasks.NEW;
     }
 
     public ArrayList<Integer> getSubtaskId() {
@@ -16,6 +17,20 @@ public class Epic extends Task {
 
     public void setSubtaskId(ArrayList<Integer> subtaskId) {
         this.subtaskId = subtaskId;
+    }
+
+    public void addSubtaskId(int subId) {
+        subtaskId.add(subId);
+    }
+
+    public void removeSubtaskId(int subId) {
+        if (subtaskId.contains(subId)) {
+            subtaskId.remove(Integer.valueOf(subId));
+        }
+    }
+
+    public void removeAllSubtasks() {
+        subtaskId.clear();
     }
 
     @Override
