@@ -21,15 +21,15 @@ import java.util.Map;
 public class FileBackedTaskManager extends InMemoryTaskManager {
     private final File file;
 
-    public FileBackedTaskManager(File file) {
+    public FileBackedTaskManager(HistoryManager historyManager, File file) {
+        super(historyManager);
         this.file = file;
     }
 
-    public static FileBackedTaskManager loadFromFile(File file) {
-        FileBackedTaskManager fileBackedTasksManager = new FileBackedTaskManager(file);
-        Map<Integer, Task> allTasksFromFile = readTasksFromFile(file, fileBackedTasksManager);
-        fileBackedTasksManager.createFromFile(allTasksFromFile);
-        return fileBackedTasksManager;
+    public static void loadFromFile(File file, FileBackedTaskManager fileBackedTaskManager) {
+        Map<Integer, Task> allTasksFromFile = readTasksFromFile(file, fileBackedTaskManager);
+
+        fileBackedTaskManager.createFromFile(allTasksFromFile);
     }
 
 
@@ -113,27 +113,24 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         }
     }
 
-    public void createTaskFromFile(Task task) {
+    private void createTaskFromFile(Task task) {
         task.setId(task.getId());
         taskMap.put(task.getId(), task);
-        save();
     }
 
 
-    public void createSubTaskFromFile(Subtask subTask) {
+    private void createSubTaskFromFile(Subtask subTask) {
         subTask.setId(subTask.getId());
         subtaskMap.put(subTask.getId(), subTask);
         Epic epic = epicMap.get(subTask.getEpicId());
         epic.addSubtaskId(subTask.getId());
         updateStatus(epic);
-        save();
     }
 
 
-    public void createEpicFromFile(Epic epic) {
+    private void createEpicFromFile(Epic epic) {
         epic.setId(epic.getId());
         epicMap.put(epic.getId(), epic);
-        save();
     }
 
     private String toString(HistoryManager manager) {
@@ -147,6 +144,12 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                     sb.append(id);
                 });
         return sb.toString();
+    }
+
+    private void saveIfNotNull(Task task) {
+        if (task != null) {
+            save();
+        }
     }
 
     @Override
@@ -188,21 +191,21 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     @Override
     public Subtask findSubtaskById(int id) {
         Subtask subtask = super.findSubtaskById(id);
-        save();
+        saveIfNotNull(subtask);
         return subtask;
     }
 
     @Override
     public Epic findEpicById(int id) {
         Epic epic = super.findEpicById(id);
-        save();
+        saveIfNotNull(epic);
         return epic;
     }
 
     @Override
     public Task findTaskById(int id) {
         Task task = super.findTaskById(id);
-        save();
+        saveIfNotNull(task);
         return task;
     }
 

@@ -69,23 +69,28 @@ public class Main {
         System.out.println(manager.getAllTasks());
         System.out.println(manager.getAllSubtasks());
         System.out.println(manager.getAllEpics());
-        TaskManager fileManager = FileBackedTaskManager.loadFromFile(new File("src/data/data.csv"));
+        FileBackedTaskManager.loadFromFile(new File("src/data/data.csv"), (FileBackedTaskManager) manager);
+        Task task10 = new Task(-1, "Задача 10", "Покормить кота", StatusOfTasks.NEW);
+        manager.add(task10);
+        Task task11 = new Task(-1, "Задача 2", "Повесить картину", StatusOfTasks.NEW);
+        manager.add(task11);
+
         System.out.println("Все задачи из файла");
-        for (Task task : fileManager.getAllTasks().values()) {
+        for (Task task : manager.getAllTasks().values()) {
             System.out.println(task);
         }
         System.out.println("Все эпики из файла");
-        for (Epic task : fileManager.getAllEpics().values()) {
+        for (Epic task : manager.getAllEpics().values()) {
             System.out.println(task);
         }
         System.out.println("Все подзадачи из файла");
-        for (Subtask task : fileManager.getAllSubtasks().values()) {
+        for (Subtask task : manager.getAllSubtasks().values()) {
             System.out.println(task);
         }
         System.out.println("История");
         System.out.println(manager.getHistoryTasks());
         System.out.println("История из файла");
-        System.out.println(fileManager.getHistoryTasks());
+        System.out.println(manager.getHistoryTasks());
 
     }
 }

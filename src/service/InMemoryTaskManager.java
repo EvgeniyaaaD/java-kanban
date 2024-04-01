@@ -16,10 +16,17 @@ public class InMemoryTaskManager implements TaskManager {
         return taskMap;
     }
 
-    protected Map<Integer, Task> taskMap = new HashMap<>();
-    protected Map<Integer, Subtask> subtaskMap = new HashMap<>();
-    protected Map<Integer, Epic> epicMap = new HashMap<>();
-    protected final HistoryManager historyManager = Managers.getHistoryManagement();
+    protected Map<Integer, Task> taskMap;
+    protected Map<Integer, Subtask> subtaskMap;
+    protected Map<Integer, Epic> epicMap;
+    protected final HistoryManager historyManager;
+
+    public InMemoryTaskManager(HistoryManager historyManager) {
+        this.taskMap = new HashMap<>();
+        this.subtaskMap = new HashMap<>();
+        this.epicMap = new HashMap<>();
+        this.historyManager = historyManager;
+    }
 
 
     private void addHistory(int taskId) {
@@ -74,20 +81,20 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteAllTasks() {
-            for (Integer id : taskMap.keySet()) {
-                historyManager.remove(id);
-            }
+        for (Integer id : taskMap.keySet()) {
+            historyManager.remove(id);
+        }
         taskMap.clear();
     }
 
     @Override
     public void deleteAllSubtasks() {
-            for (Integer id : subtaskMap.keySet()) {
-                historyManager.remove(id);
-                int idEpic = subtaskMap.get(id).getEpicId();
-                epicMap.get(idEpic).getSubtaskId().clear();
-                updateStatus(epicMap.get(idEpic));
-            }
+        for (Integer id : subtaskMap.keySet()) {
+            historyManager.remove(id);
+            int idEpic = subtaskMap.get(id).getEpicId();
+            epicMap.get(idEpic).getSubtaskId().clear();
+            updateStatus(epicMap.get(idEpic));
+        }
         subtaskMap.clear();
     }
 

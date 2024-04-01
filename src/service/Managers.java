@@ -9,10 +9,10 @@ public class Managers {
     }
 
     public static TaskManager getTaskManagement() {
-        return new InMemoryTaskManager();
+        return new InMemoryTaskManager(getHistoryManagement());
     }
 
     public static TaskManager getDefault() {
-        return new FileBackedTaskManager(new File("src/data/data.csv"));
+        return new FileBackedTaskManager(getHistoryManagement(), new File("src/data/data.csv"));
     }
 }
