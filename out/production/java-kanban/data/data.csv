@@ -1,0 +1,7 @@
+id,type,name,status,description,epic
+2,TASK,Задача 2,NEW,Повесить картину
+4,SUBTASK,Подзадача 1,IN_PROGRESS,Купить яйца,3
+5,SUBTASK,Подзадача 2,NEW,Купить хлеб,3
+3,EPIC,Эпик 1,IN_PROGRESS,Купить продукты
+
+2,4,3
