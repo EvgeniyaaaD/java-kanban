@@ -36,7 +36,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     private static Map<Integer, Task> readTasksFromFile(File file, FileBackedTaskManager fileBackedTasksManager) {
         Map<Integer, Task> allTasksFromFile = new HashMap<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String currentLine =reader.readLine();
+            String currentLine = reader.readLine();
             String historyLine = null;
             while ((currentLine = reader.readLine()) != null) {
                 if (currentLine.isEmpty()) {
