@@ -10,8 +10,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class InMemoryTaskManagerTest {
-    InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager(Managers.getHistoryManagement());
-    TaskManager manager = Managers.getTaskManagement();
+    TaskManager inMemoryTaskManager = Managers.getTaskManagement();
     HistoryManager historyManager = Managers.getHistoryManagement();
 
     @BeforeEach
@@ -24,7 +23,7 @@ class InMemoryTaskManagerTest {
 
     @Test
     void deleteAllTasksDeleteBrowsingHistoryOfTheseTasks() {
-        manager.deleteAllTasks();
+        inMemoryTaskManager.deleteAllTasks();
         List<Integer> result = historyManager.getHistory();
         assertEquals(0, result.size());
     }

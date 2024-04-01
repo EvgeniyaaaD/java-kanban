@@ -5,7 +5,6 @@ import model.StatusOfTasks;
 import model.Subtask;
 import model.Task;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,17 +16,11 @@ public class InMemoryTaskManager implements TaskManager {
         return taskMap;
     }
 
-    private Map<Integer, Task> taskMap;
-    private Map<Integer, Subtask> subtaskMap;
-    private Map<Integer, Epic> epicMap;
-    private final HistoryManager historyManager;
+    protected Map<Integer, Task> taskMap = new HashMap<>();
+    protected Map<Integer, Subtask> subtaskMap = new HashMap<>();
+    protected Map<Integer, Epic> epicMap = new HashMap<>();
+    protected final HistoryManager historyManager = Managers.getHistoryManagement();
 
-    public InMemoryTaskManager(HistoryManager historyManager) {
-        this.taskMap = new HashMap<>();
-        this.subtaskMap = new HashMap<>();
-        this.epicMap = new HashMap<>();
-        this.historyManager = historyManager;
-    }
 
     private void addHistory(int taskId) {
         this.historyManager.addTask(taskId);
@@ -55,6 +48,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (epicMap.containsKey(subtask.getEpicId())) {
             epicMap.get(subtask.getEpicId()).getSubtaskId().add(subtask.getId());
         }
+        updateStatus(epicMap.get(subtask.getEpicId()));
     }
 
     @Override
@@ -64,40 +58,36 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Collection<Task> getAllTasks() {
-        return taskMap.values();
+    public Map<Integer, Task> getAllTasks() {
+        return taskMap;
     }
 
     @Override
-    public Collection<Subtask> getAllSubtasks() {
-        return subtaskMap.values();
+    public Map<Integer, Subtask> getAllSubtasks() {
+        return subtaskMap;
     }
 
     @Override
-    public Collection<Epic> getAllEpics() {
-        return epicMap.values();
+    public Map<Integer, Epic> getAllEpics() {
+        return epicMap;
     }
 
     @Override
     public void deleteAllTasks() {
-        while (!taskMap.isEmpty()) {
             for (Integer id : taskMap.keySet()) {
                 historyManager.remove(id);
             }
-        }
         taskMap.clear();
     }
 
     @Override
     public void deleteAllSubtasks() {
-        while (!subtaskMap.isEmpty()) {
             for (Integer id : subtaskMap.keySet()) {
                 historyManager.remove(id);
                 int idEpic = subtaskMap.get(id).getEpicId();
                 epicMap.get(idEpic).getSubtaskId().clear();
                 updateStatus(epicMap.get(idEpic));
             }
-        }
         subtaskMap.clear();
     }
 
@@ -154,10 +144,10 @@ public class InMemoryTaskManager implements TaskManager {
     public void deleteSubtaskById(int id) {
         int epicId;
         epicId = subtaskMap.get(id).getEpicId();
-        epicMap.get(epicId).getSubtaskId().remove((Integer)id);
-        updateStatus(epicMap.get(epicId));
+        epicMap.get(epicId).getSubtaskId().remove((Integer) id);
         subtaskMap.remove(id);
         historyManager.remove(id);
+        updateStatus(epicMap.get(epicId));
     }
 
     @Override
