@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public class InMemoryTaskManager implements TaskManager {
-    private int nextId = 1;
+    protected int nextId = 1;
 
     public Map<Integer, Task> getTasks() {
         return taskMap;
@@ -36,6 +36,14 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public List<Integer> getHistoryTasks() {
         return this.historyManager.getHistory();
+    }
+
+    public int getNextId() {
+        return nextId;
+    }
+
+    public void setNextId(int nextId) {
+        this.nextId = nextId;
     }
 
     private void generateId(Task task) {

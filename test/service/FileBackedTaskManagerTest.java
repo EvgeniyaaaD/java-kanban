@@ -42,8 +42,7 @@ class FileBackedTaskManagerTest {
         fileManager.add(epic1);
         fileManager.add(subTask1);
         fileManager.findTaskById(task1.getId());
-        TaskManager loadedManager = Managers.getDefault();
-        FileBackedTaskManager.loadFromFile(file, (FileBackedTaskManager) loadedManager);
+        TaskManager loadedManager = FileBackedTaskManager.loadFromFile(file);
         assertEquals(fileManager.findTaskById(1), loadedManager.findTaskById(1), "Задача, созданная из файла, не совпадает с сохраненной");
         assertEquals(fileManager.findSubtaskById(3), loadedManager.findSubtaskById(3), "Подзадача, созданная из файла, не совпадает с сохраненной");
         assertEquals(fileManager.findEpicById(2), loadedManager.findEpicById(2), "Эпик, созданный из файла, не совпадает с сохраненной");
@@ -54,7 +53,7 @@ class FileBackedTaskManagerTest {
         File tempDir = Files.createTempDirectory("test_files").toFile();
         File file = Files.createTempFile(tempDir.toPath(), "empty_tasks", ".csv").toFile();
         TaskManager fileManager = Managers.getDefault();
-        FileBackedTaskManager.loadFromFile(file, (FileBackedTaskManager) fileManager);
+        FileBackedTaskManager.loadFromFile(file);
         assertTrue(fileManager.getAllTasks().isEmpty(), "Ничего не должно быть создано из пустого файла");
         assertTrue(fileManager.getAllEpics().isEmpty(), "Ничего не должно быть создано из пустого файла");
         assertTrue(fileManager.getAllSubtasks().isEmpty(), "Ничего не должно быть создано из пустого файла");
@@ -81,8 +80,7 @@ class FileBackedTaskManagerTest {
             writer.write("2,EPIC,Открытие загадочного острова,NEW,Исследовать неизвестный остров в целях науки и приключений,\n");
             writer.write("3,SUBTASK,Создание карты острова,IN_PROGRESS,Проанализировать данные и нарисовать детальную карту острова,2\n");
         }
-        TaskManager loadedManager = Managers.getDefault();
-        FileBackedTaskManager.loadFromFile(file, (FileBackedTaskManager) loadedManager);
+        TaskManager loadedManager = FileBackedTaskManager.loadFromFile(file);
 
 
         Task task = loadedManager.findTaskById(1);

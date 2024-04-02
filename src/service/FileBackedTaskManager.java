@@ -20,16 +20,19 @@ import java.util.Map;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
     private final File file;
+    private static int maxId = 0;
 
     public FileBackedTaskManager(HistoryManager historyManager, File file) {
         super(historyManager);
         this.file = file;
     }
 
-    public static void loadFromFile(File file, FileBackedTaskManager fileBackedTaskManager) {
-        Map<Integer, Task> allTasksFromFile = readTasksFromFile(file, fileBackedTaskManager);
-
-        fileBackedTaskManager.createFromFile(allTasksFromFile);
+    public static FileBackedTaskManager loadFromFile(File file) {
+        FileBackedTaskManager manager = new FileBackedTaskManager(Managers.getHistoryManagement(), file);
+        Map<Integer, Task> allTasksFromFile = readTasksFromFile(file, manager);
+        manager.createFromFile(allTasksFromFile);
+        manager.setNextId(++maxId);
+        return manager;
     }
 
 
@@ -48,6 +51,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                     continue;
                 }
                 int id = Integer.parseInt(parts[0]);
+                maxId = Math.max(id, maxId);
                 String name = parts[2];
                 String description = parts[4];
                 StatusOfTasks status = StatusOfTasks.valueOf(parts[3]);
