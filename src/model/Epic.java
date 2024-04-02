@@ -1,21 +1,23 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Epic extends Task {
-    protected ArrayList<Integer> subtaskId = new ArrayList<>();
+    protected List<Integer> subtaskId = new ArrayList<>();
 
     public Epic(int id, String title, String description) {
         super(id, title, description, null);
         this.status = StatusOfTasks.NEW;
+        this.type = TypeOfTask.EPIC;
     }
 
-    public ArrayList<Integer> getSubtaskId() {
+    public List<Integer> getSubtaskId() {
         return subtaskId;
     }
 
-    public void setSubtaskId(ArrayList<Integer> subtaskId) {
+    public void setSubtaskId(List<Integer> subtaskId) {
         this.subtaskId = subtaskId;
     }
 
@@ -49,12 +51,7 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        return "domain.model.Epic{" +
-                "subtaskId=" + subtaskId +
-                ", id=" + id +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", status='" + status + '\'' +
-                '}';
+        return String.format("%s,%s,%s,%s,%s",
+                id, type, title, status, description);
     }
 }

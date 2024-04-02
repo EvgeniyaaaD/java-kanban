@@ -6,6 +6,7 @@ public class Task {
     protected int id;
     protected String title;
     protected String description;
+    protected TypeOfTask type;
     protected StatusOfTasks status;
 
     public Task(int id, String title, String description, StatusOfTasks status) {
@@ -13,6 +14,7 @@ public class Task {
         this.title = title;
         this.description = description;
         this.status = status;
+        this.type = TypeOfTask.TASK;
     }
 
     public int getId() {
@@ -62,11 +64,6 @@ public class Task {
 
     @Override
     public String toString() {
-        return "domain.model.Task{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", status='" + status + '\'' +
-                '}';
+        return String.format("%s,%s,%s,%s,%s", id, type, title, status, description);
     }
 }

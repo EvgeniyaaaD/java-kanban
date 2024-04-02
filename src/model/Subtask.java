@@ -8,6 +8,7 @@ public class Subtask extends Task {
     public Subtask(int id, String title, String description, StatusOfTasks status, int epicId) {
         super(id, title, description, status);
         this.epicId = epicId;
+        this.type = TypeOfTask.SUBTASK;
     }
 
     @Override
@@ -33,12 +34,7 @@ public class Subtask extends Task {
 
     @Override
     public String toString() {
-        return "domain.model.Subtask{" +
-                "epicId=" + epicId +
-                ", id=" + id +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", status='" + status + '\'' +
-                '}';
+        return String.format("%s,%s,%s,%s,%s,%s",
+                id, type, title, status, description, epicId);
     }
 }

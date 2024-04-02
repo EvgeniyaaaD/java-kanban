@@ -1,5 +1,7 @@
 package service;
 
+import java.io.File;
+
 public class Managers {
 
     public static HistoryManager getHistoryManagement() {
@@ -8,5 +10,9 @@ public class Managers {
 
     public static TaskManager getTaskManagement() {
         return new InMemoryTaskManager(getHistoryManagement());
+    }
+
+    public static TaskManager getDefault() {
+        return new FileBackedTaskManager(getHistoryManagement(), new File("src/data/data.csv"));
     }
 }
