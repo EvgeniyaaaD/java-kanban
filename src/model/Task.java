@@ -1,5 +1,9 @@
 package model;
 
+import util.TimeFormatter;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Task {
@@ -8,6 +12,9 @@ public class Task {
     protected String description;
     protected TypeOfTask type;
     protected StatusOfTasks status;
+    protected Duration duration;
+    protected LocalDateTime startTime;
+    protected LocalDateTime endTime;
 
     public Task(int id, String title, String description, StatusOfTasks status) {
         this.id = id;
@@ -15,6 +22,15 @@ public class Task {
         this.description = description;
         this.status = status;
         this.type = TypeOfTask.TASK;
+    }
+
+    public Task(int id, String title, String description, StatusOfTasks status, long duration, String startTime) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.status = status;
+        this.duration = Duration.ofMinutes(duration);
+        this.startTime = LocalDateTime.parse(startTime, TimeFormatter.TIME_FORMATTER);
     }
 
     public int getId() {
@@ -49,6 +65,34 @@ public class Task {
         this.status = status;
     }
 
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        if (duration != null && startTime != null) {
+            return startTime.plus(duration);
+        } else {
+            return null;
+        }
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -64,6 +108,9 @@ public class Task {
 
     @Override
     public String toString() {
-        return String.format("%s,%s,%s,%s,%s", id, type, title, status, description);
+        String durationString = (duration != null) ? duration.toMinutes() + "" : "-";
+        String startTimeString = (startTime != null) ? startTime.format(TimeFormatter.TIME_FORMATTER) : "-";
+        String endTimeString = (getEndTime() != null) ? getEndTime().format(TimeFormatter.TIME_FORMATTER) : "-";
+        return String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s", id, type, title, status, description, "-", durationString, startTimeString, endTimeString);
     }
 }

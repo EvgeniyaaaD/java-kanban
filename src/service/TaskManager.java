@@ -9,6 +9,7 @@ import java.util.Map;
 
 public interface TaskManager {
 
+
     void add(Task task);
 
     List<Integer> getHistoryTasks();
