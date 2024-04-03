@@ -51,22 +51,37 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                     continue;
                 }
                 int id = Integer.parseInt(parts[0]);
-                maxId = Math.max(id, maxId);
-                String name = parts[2];
-                String description = parts[4];
-                StatusOfTasks status = StatusOfTasks.valueOf(parts[3]);
                 TypeOfTask type = TypeOfTask.valueOf(parts[1]);
-                switch (type) {
-                    case TASK:
-                        allTasksFromFile.put(id, new Task(id, name, description, status));
-                        break;
-                    case EPIC:
-                        allTasksFromFile.put(id, new Epic(id, name, description));
-                        break;
-                    case SUBTASK:
-                        int epicId = Integer.parseInt(parts[5]);
-                        allTasksFromFile.put(id, new Subtask(id, name, description, status, epicId));
-                        break;
+                String name = parts[2];
+                StatusOfTasks status = StatusOfTasks.valueOf(parts[3]);
+                String description = parts[4];
+                maxId = Math.max(id, maxId);
+
+
+                long duration;
+                if (parts.length <= 6 || parts[6].equals("-")) {
+                    switch (type) {
+                        case TASK -> allTasksFromFile.put(id, new Task(id, name, description, status));
+                        case EPIC -> allTasksFromFile.put(id, new Epic(id, name, description));
+                        case SUBTASK -> {
+                            int epicId = Integer.parseInt(parts[5]);
+                            allTasksFromFile.put(id, new Subtask(id, name, description, status, epicId));
+                        }
+                    }
+                } else {
+                    if (!parts[6].equals("-")) {
+                        duration = Long.parseLong(parts[6]);
+                        String startTime = parts[7];
+                        switch (type) {
+                            case TASK ->
+                                    allTasksFromFile.put(id, new Task(id, name, description, status, duration, startTime));
+                            case EPIC -> allTasksFromFile.put(id, new Epic(id, name, description));
+                            case SUBTASK -> {
+                                int epicId = Integer.parseInt(parts[5]);
+                                allTasksFromFile.put(id, new Subtask(id, name, description, status, epicId, duration, startTime));
+                            }
+                        }
+                    }
                 }
             }
             if (historyLine != null) {
@@ -93,16 +108,18 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     private void createFromFile(Map<Integer, ? extends Task> tasks) {
-        for (Task task : tasks.values()) {
-            if (task.getClass() == Epic.class) {
-                createEpicFromFile((Epic) task);
-            } else if (task.getClass() == Subtask.class) {
-                createSubTaskFromFile((Subtask) task);
-            } else {
-                createTaskFromFile(task);
-            }
-        }
+        tasks.values().stream()
+                .forEach(task -> {
+                    if (task instanceof Epic) {
+                        createEpicFromFile((Epic) task);
+                    } else if (task instanceof Subtask) {
+                        createSubTaskFromFile((Subtask) task);
+                    } else {
+                        createTaskFromFile(task);
+                    }
+                });
     }
+
 
     private void save() {
         try (Writer writer = new FileWriter(file)) {

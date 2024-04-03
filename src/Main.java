@@ -91,6 +91,16 @@ public class Main {
         System.out.println(manager.getHistoryTasks());
         System.out.println("История из файла");
         System.out.println(manager.getHistoryTasks());
-
+        Task task12 = new Task(-1, "Задача 1", "Покормить кота", StatusOfTasks.NEW, 30, "02.04.2024 10:00");
+        manager.add(task12);
+        Epic epic22 = new Epic(-1, "Эпик 2", "Цветы для мамы");
+        manager.add(epic22);
+        Subtask subtask32 = new Subtask(-1, "1 подзадача", "Заказать доставку цветов", StatusOfTasks.NEW,
+                epic22.getId(), 30, "02.04.2024 11:00");
+        manager.add(subtask32);
+        Subtask subtask323 = new Subtask(-1, "1 подзадача", "Заказать доставку цветов", StatusOfTasks.NEW,
+                epic22.getId(), 30, "02.04.2024 21:00");
+        manager.add(subtask323);
+        System.out.println(epic22);
     }
 }

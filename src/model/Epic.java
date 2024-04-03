@@ -1,5 +1,7 @@
 package model;
 
+import util.TimeFormatter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -12,6 +14,7 @@ public class Epic extends Task {
         this.status = StatusOfTasks.NEW;
         this.type = TypeOfTask.EPIC;
     }
+
 
     public List<Integer> getSubtaskId() {
         return subtaskId;
@@ -51,7 +54,10 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        return String.format("%s,%s,%s,%s,%s",
-                id, type, title, status, description);
+        String durationString = (duration != null) ? duration.toMinutes() + "" : "-";
+        String startTimeString = (startTime != null) ? startTime.format(TimeFormatter.TIME_FORMATTER) : "-";
+        String endTimeString = (endTime != null) ? endTime.format(TimeFormatter.TIME_FORMATTER) : "-";
+        return String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s",
+                id, type, title, status, description, "-", durationString, startTimeString, endTimeString);
     }
 }

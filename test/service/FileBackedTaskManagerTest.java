@@ -18,34 +18,31 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class FileBackedTaskManagerTest {
-    HistoryManager historyManager;
+class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskManager> {
+    File file;
 
     @BeforeEach
-    void beforeEach() {
-        historyManager = Managers.getHistoryManagement();
+    void setUp() throws IOException {
+        HistoryManager historyManager = Managers.getHistoryManagement();
+        file = File.createTempFile("test", "csv");
+        manager = new FileBackedTaskManager(historyManager, file);
     }
 
     @Test
     void verifySavedAndLoadedDataIsSame() throws IOException {
 
-        File tempDir = Files.createTempDirectory("test_files").toFile();
-        File file = Files.createTempFile(tempDir.toPath(), "tasks", ".csv").toFile();
-
-        TaskManager fileManager = new FileBackedTaskManager(historyManager, file);
-
         Task task1 = new Task(1, "Путешествие на Луну", "Организовать экспедицию для исследования Луны", StatusOfTasks.NEW);
         Epic epic1 = new Epic(2, "Строительство замка", "Построить величественный замок на вершине холма");
         Subtask subTask1 = new Subtask(3, "Изучение местности", "Провести обследование территории для выбора места под замок", StatusOfTasks.IN_PROGRESS, epic1.getId());
 
-        fileManager.add(task1);
-        fileManager.add(epic1);
-        fileManager.add(subTask1);
-        fileManager.findTaskById(task1.getId());
+        manager.add(task1);
+        manager.add(epic1);
+        manager.add(subTask1);
+        manager.findTaskById(task1.getId());
         TaskManager loadedManager = FileBackedTaskManager.loadFromFile(file);
-        assertEquals(fileManager.findTaskById(1), loadedManager.findTaskById(1), "Задача, созданная из файла, не совпадает с сохраненной");
-        assertEquals(fileManager.findSubtaskById(3), loadedManager.findSubtaskById(3), "Подзадача, созданная из файла, не совпадает с сохраненной");
-        assertEquals(fileManager.findEpicById(2), loadedManager.findEpicById(2), "Эпик, созданный из файла, не совпадает с сохраненной");
+        assertEquals(manager.findTaskById(1), loadedManager.findTaskById(1), "Задача, созданная из файла, не совпадает с сохраненной");
+        assertEquals(manager.findSubtaskById(3), loadedManager.findSubtaskById(3), "Подзадача, созданная из файла, не совпадает с сохраненной");
+        assertEquals(manager.findEpicById(2), loadedManager.findEpicById(2), "Эпик, созданный из файла, не совпадает с сохраненной");
     }
 
     @Test
@@ -64,8 +61,6 @@ class FileBackedTaskManagerTest {
     void saveEmptyManagerToFileShouldCreateEmptyFile() throws IOException {
         File tempDir = Files.createTempDirectory("test_files").toFile();
         File file = Files.createTempFile(tempDir.toPath(), "empty_file", ".csv").toFile();
-
-        FileBackedTaskManager fileManager = new FileBackedTaskManager(historyManager, file);
         assertTrue(file.exists(), "Сохраненный файл должен существовать");
         assertEquals(0, file.length(), "Сохраненный файл должен быть пустым");
     }

@@ -1,5 +1,7 @@
 package model;
 
+import util.TimeFormatter;
+
 import java.util.Objects;
 
 public class Subtask extends Task {
@@ -9,6 +11,13 @@ public class Subtask extends Task {
         super(id, title, description, status);
         this.epicId = epicId;
         this.type = TypeOfTask.SUBTASK;
+    }
+
+    public Subtask(int id, String title, String description, StatusOfTasks status, int epicId, long duration, String startTime) {
+        super(id, title, description, status, duration, startTime);
+        this.epicId = epicId;
+        this.type = TypeOfTask.SUBTASK;
+
     }
 
     @Override
@@ -34,7 +43,10 @@ public class Subtask extends Task {
 
     @Override
     public String toString() {
-        return String.format("%s,%s,%s,%s,%s,%s",
-                id, type, title, status, description, epicId);
+        String durationString = (duration != null) ? duration.toMinutes() + "" : "-";
+        String startTimeString = (startTime != null) ? startTime.format(TimeFormatter.TIME_FORMATTER) : "-";
+        String endTimeString = (getEndTime() != null) ? getEndTime().format(TimeFormatter.TIME_FORMATTER) : "-";
+        return String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s",
+                id, type, title, status, description, epicId, durationString, startTimeString, endTimeString);
     }
 }
