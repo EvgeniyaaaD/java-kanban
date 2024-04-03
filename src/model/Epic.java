@@ -15,6 +15,12 @@ public class Epic extends Task {
         this.type = TypeOfTask.EPIC;
     }
 
+    public Epic(String title, String description) {
+        super(title, description, null);
+        this.status = StatusOfTasks.NEW;
+        this.type = TypeOfTask.EPIC;
+    }
+
 
     public List<Integer> getSubtaskId() {
         return subtaskId;

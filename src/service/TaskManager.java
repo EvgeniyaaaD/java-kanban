@@ -6,9 +6,9 @@ import model.Task;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public interface TaskManager {
-
 
     void add(Task task);
 
@@ -23,6 +23,8 @@ public interface TaskManager {
     Map<Integer, Subtask> getAllSubtasks();
 
     Map<Integer, Epic> getAllEpics();
+
+    Set<Task> getPrioritizedTasks();
 
     void deleteAllTasks();
 
@@ -48,6 +50,7 @@ public interface TaskManager {
 
     void update(Epic epic);
 
-    void updateStatus(Epic epic);
+    void updateEpicBySubtask(Epic epic);
 
+    boolean isCrossing(Task subtask);
 }

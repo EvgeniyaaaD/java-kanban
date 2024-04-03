@@ -123,7 +123,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     private void save() {
         try (Writer writer = new FileWriter(file)) {
-            writer.write("id,type,name,status,description,epic\n");
+            writer.write("id,type,name,status,description,epic,duration,startTime,endTime\n");
             saveTasks(writer, super.getAllTasks().values());
             saveTasks(writer, super.getAllSubtasks().values());
             saveTasks(writer, super.getAllEpics().values());
@@ -145,7 +145,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         subtaskMap.put(subTask.getId(), subTask);
         Epic epic = epicMap.get(subTask.getEpicId());
         epic.addSubtaskId(subTask.getId());
-        updateStatus(epic);
+        updateEpicBySubtask(epic);
     }
 
 
@@ -267,8 +267,8 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     @Override
-    public void updateStatus(Epic epic) {
-        super.updateStatus(epic);
+    public void updateEpicBySubtask(Epic epic) {
+        super.updateEpicBySubtask(epic);
         save();
     }
 }
